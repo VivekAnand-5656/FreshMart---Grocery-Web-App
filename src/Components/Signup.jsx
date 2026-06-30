@@ -55,7 +55,7 @@ const Signup = () => {
         <div className='bg-[#ffffff] w-[30%] h-full rounded-2xl p-2 flex flex-col justify-center   ' >
           <h1 className=' text-3xl font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1>
           <p className=' text-center font-bold text-2xl ' >Welcome Back</p>
-          <p className=' text-center font-semibold text-[0.9rem] ' >Login to your account</p>
+          <p className=' text-center font-semibold text-[0.9rem] ' >Create to your account</p>
           <form
             onSubmit={handle_signup}
             className=' w-full  flex flex-col '

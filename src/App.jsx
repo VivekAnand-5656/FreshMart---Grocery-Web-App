@@ -8,6 +8,12 @@ import { AuthProvider } from './Context/AuthContext'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import SellerHome from './Seller/SellerHome'
+import Cart from './Customer/Cart' 
+import Orders from './Customer/Orders'
+import Profile from './Customer/Profile' 
+import FilterProducts from './Customer/FilterProducts'
+import Products from './Customer/Products'
+import SearchProducts from './Customer/SearchProducts'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +27,14 @@ function App() {
               <Route index element={<Home />} />
               <Route path='login' element={<Login />} />
               <Route path='signup' element={<Signup />} />
+              <Route path='carts' element={<Cart />} /> 
+              <Route path='orders' element={<Orders />} /> 
+              <Route path='profile' element={<Profile />} /> 
+              <Route path='filterproducts' element={<FilterProducts />} /> 
+              <Route path='products' element={<Products />} /> 
+              <Route path='search' element={<SearchProducts />} /> 
+
+
               <Route path='sellerhome' element={<SellerHome />} />
             </Route>
           </Routes>
