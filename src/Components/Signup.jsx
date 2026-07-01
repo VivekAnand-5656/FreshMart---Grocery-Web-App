@@ -10,7 +10,7 @@ const Signup = () => {
     email: "",
     mobile: "",
     password: "",
-    role: ""
+    role: "customer"
 
   })
 
@@ -93,6 +93,7 @@ const Signup = () => {
             <select
               id="role"
               name="role"
+              value={formdata.role}
               onChange={handle_change}
               className="w-full border border-green-600 rounded-lg px-3 py-2 outline-none focus:border-green-500"
             >

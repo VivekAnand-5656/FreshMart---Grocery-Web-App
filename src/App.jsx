@@ -14,6 +14,7 @@ import Profile from './Customer/Profile'
 import FilterProducts from './Customer/FilterProducts'
 import Products from './Customer/Products'
 import SearchProducts from './Customer/SearchProducts'
+import AddProduct from './Seller/AddProduct'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,6 +37,7 @@ function App() {
 
 
               <Route path='sellerhome' element={<SellerHome />} />
+              <Route path='addproduct' element={<AddProduct />} />
             </Route>
           </Routes>
         </BrowserRouter>

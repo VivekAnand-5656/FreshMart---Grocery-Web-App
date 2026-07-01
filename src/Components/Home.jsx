@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
-  const { token,address,setAddress } = useContext(AuthContext)
+  const { token, address, setAddress } = useContext(AuthContext)
   const navigate = useNavigate()
   const features = [
     {
@@ -122,6 +122,17 @@ const Home = () => {
     } catch (error) {
       console.log(`Error:- ${error}`)
       console.log(`Raise Error:- ${error.response.data.detail}`)
+      toast.error('Please Login', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
     }
   }
 
@@ -132,7 +143,7 @@ const Home = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }); 
+      });
       setAddress(response.data.address)
     } catch (error) {
       console.log(error.response?.data || error.message);
@@ -157,9 +168,9 @@ const Home = () => {
           <div className=' w-[40%] p-2 ' >
             <h1 className=' text-5xl font-bold  ' >Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' > Doorstep </span> </h1>
             <p>Get the best quality products at the best prices.</p>
-            <button 
-            onClick={()=>navigate("/products")}
-            className=' bg-[#259d00] text-white p-2 font-semibold rounded cursor-pointer ' >Shop Now</button>
+            <button
+              onClick={() => navigate("/products")}
+              className=' bg-[#259d00] text-white p-2 font-semibold rounded cursor-pointer ' >Shop Now</button>
           </div>
           {/* --- Right ---- */}
           <div className=' w-[60%] h-full relative flex justify-center items-center ' >
@@ -201,8 +212,8 @@ const Home = () => {
               catagories.map((item, index) => {
                 const Icon = item.icon
                 return (
-                  <div key={index} onClick={()=>{
-                    navigate(`/filterproducts?category=${item.name}`) 
+                  <div key={index} onClick={() => {
+                    navigate(`/filterproducts?category=${item.name}`)
                   }} className="w-25 h-25 bg-[#e2fadb]  p-1 rounded flex flex-col items-center gap-1 cursor-pointer hover:scale-105 transition-all duration-500  ">
                     <img src={Icon} alt="" className='rounded w-full h-[75%] object-contain   ' />
                     <p className=' font-semibold text-[0.9em] ' >{item.name}</p>
@@ -217,7 +228,7 @@ const Home = () => {
         <div className=' w-full bg-[#d2fcc7] p-2 ' >
           <div className=' flex justify-between ' >
             <h1 className=' text-[1.2rem] font-bold ' >Products</h1>
-            <p onClick={()=>navigate("/products")} className=' text-[#000000] cursor-pointer ' >View All ➡️</p>
+            <p onClick={() => navigate("/products")} className=' text-[#000000] cursor-pointer ' >View All ➡️</p>
           </div>
           <div className=' w-full h-auto flex flex-wrap justify-center items-center gap-3 ' >
             {
