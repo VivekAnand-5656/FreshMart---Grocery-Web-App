@@ -11,6 +11,7 @@ export const AuthProvider = ({children})=>{
     )
     const [address,setAddress] = useState(null) 
     const [searchProducts,setSearchProducts] = useState([])
+    const [user,setUser] = useState({})
 
     useEffect(()=>{
         const stored_token = localStorage.getItem("token")
@@ -39,7 +40,7 @@ export const AuthProvider = ({children})=>{
     return (
         <AuthContext.Provider 
         value={{
-            token,login, role, logout,address,setAddress, searchProducts,setSearchProducts
+            token,login, role, logout,address,setAddress, searchProducts,setSearchProducts, user, setUser
         }}
         >
             {children}
