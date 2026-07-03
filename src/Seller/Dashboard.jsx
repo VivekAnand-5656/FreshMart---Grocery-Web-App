@@ -130,20 +130,7 @@ const Dashboard = () => {
                     <p className="mt-3 text-blue-100 max-w-lg">
                         Manage products, track orders and increase your sales with
                         your seller dashboard.
-                    </p>
-
-                    <div className="flex gap-4 mt-6">
-
-                        <button
-                            onClick={() => navigate("/addproduct")}
-                            className="bg-white text-[#44ac08] px-5 py-3 rounded-xl font-semibold flex items-center gap-2 hover:scale-105 duration-300">
-                            <FaPlus />
-                            Add Product
-                        </button>
-
-
-
-                    </div>
+                    </p> 
 
                 </div>
 
@@ -180,7 +167,7 @@ const Dashboard = () => {
 
             {/* ================= Quick Actions ================= */}
 
-            <div className="mt-12">
+            {/* <div className="mt-12">
 
                 <h2 className="text-2xl font-bold text-gray-800 mb-5">
                     ⚡ Quick Actions
@@ -248,7 +235,7 @@ const Dashboard = () => {
 
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }

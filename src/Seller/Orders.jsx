@@ -1,68 +1,240 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Context/AuthContext'
 import axios from 'axios'
+import { FaFilter } from "react-icons/fa";
+
 
 const Orders = () => {
   const { token } = useContext(AuthContext)
   const [allOrders, setAllOrders] = useState([])
   const apibase = "https://grocery-kirana-store.onrender.com"
 
-  // ============ Fetch All Orders ==========
+  // ========== Order Fetch ========
   const fetch_orders = async () => {
     try {
-      const response = await axios.get(`${apibase}/sellers/myorders`,
+      const response = await axios.get(
+        `${apibase}/sellers/myorders`,
         {
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
-      )
-      console.log(`Datas:- ${response.data}`)
+      ) 
       setAllOrders(response.data)
     } catch (error) {
       console.log(`Error:- ${error}`)
     }
   }
 
+  // ============= Filter By Order Status ==============
+  const [status, setStatus] = useState("Pending")
+  const filter_by_order = async (txt) => {
+    try {
+      // setAllOrders([])
+      const response = await axios.get(`${apibase}/sellers/orderbystatus/${txt}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )  
+      setAllOrders(response.data)
+    } catch (error) {
+      console.log(`Error:- ${error}`)
+      fetch_orders()
+
+    }
+  }
+
+  // ============ Update Order Status ===========
+  const [updateStatus, setUpdateStatus] = useState({});
+
+  const update_order_status = async (orderId, status) => {
+    try {
+      const response = await axios.put(
+        `${apibase}/sellers/statusupdate/${orderId}`,
+        {
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+ 
+
+      setUpdateStatus((prev) => ({
+        ...prev,
+        [orderId]: status,
+      }));
+
+      fetch_orders();
+    } catch (error) {
+      console.log(error.response?.data || error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetch_orders()
     }
-  }, [])
-  // ====== orders fetch ho gya hai ab status update krna hai 
+  }, [token])
 
   return (
     <>
-      <div className=' w-full h-full p-2 bg-[#d6ffce] ' >
-        <h1 className=' text-[1.2rem] font-bold ' >My Orders</h1>
-        <div className=' w-full h-[90%] border scrolling overflow-scroll flex flex-wrap gap-2 p-2 rounded ' >
+      <div className="w-full h-full bg-[#d6ffce] p-4">
+
+        <div className=' w-full flex justify-between items-center ' >
+          <h1 className="text-2xl font-bold text-[#1b7d05] mb-4">
+            My Orders
+          </h1>
+
+          {/* ----------- DropDown -------- */}
+          <div className=' flex justify-center items-center gap-2 ' >
+            <select
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value)
+                filter_by_order(e.target.value)
+              }}
+              className=' cursor-pointer border-none bg-[#2c9b03] outline-0 text-white font-bold rounded p-1.5 ' >
+              <option value="Pending">Pending</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Packed">Packed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="w-full h-[90%] overflow-y-scroll scrolling">
+
           {
             allOrders.length === 0 ? (
-              <p>No Orders</p>
+              <div className="h-full flex items-center justify-center">
+                <p className="text-lg font-semibold text-gray-500">
+                  No Orders Found
+                </p>
+              </div>
             ) : (
-              allOrders.map((order, index) => (
-                <div key={index} className='  w-full h-60   flex flex-col justify-between  bg-[#ffffff] rounded p-2 relative ' >
-                  <div className=' flex w-full h-[90%]   gap-2 p-1 overflow-scroll scrolling bg-[#e3f8d1] ' >
-                    {
-                      order.items.map((product, index) => (
-                        <div className=' w-40 h-full bg-[#ffffff] rounded flex flex-col justify-between p-2  ' >
-                          <img src="" alt="order" className=' w-full h-20  object-contain rounded ' />
-                          <p className=' text-[0.9rem] text-[#249904] line-clamp-1 ' >{product.productname}</p>
-                          <div className=' w-full flex justify-between items-center ' >
-                            <p className=' font-semibold ' >₹ {product.discount_price}</p>
-                            <p className=' text-[0.9rem] ' >Qty {product.quantity}</p>
-                          </div>
-                          <p className=' absolute top-0 right-1 bg-[#ffc013] rounded-2xl p-0.5 text-[0.7rem] text-[#ffffff]  ' >{product.status}</p>
+
+              <div className="flex flex-col gap-5">
+
+                {
+                  allOrders.map((order, index) => (
+
+                    <div
+                      key={index}
+                      className="bg-white rounded-xl shadow p-4"
+                    >
+
+                      {/* Order Header */}
+
+                      <div className="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 className="font-bold text-green-700">
+                          Order #{index + 1}
+                        </h2>
+
+                        <div className=' flex justify-center items-center gap-2  ' >
+                          <select
+                            value={updateStatus[order._id] || order.items[0]?.status}
+                            onChange={(e) => {
+                              update_order_status(order._id, e.target.value);
+                            }}
+                            className="text-[0.7rem] cursor-pointer border-none bg-[#031c9b] outline-none text-white font-bold rounded px-2 py-1"
+                          >
+                            <option value="Pending">Pending</option>
+                            {/* <option value="Accepted">Accepted</option> */}
+                            {/* <option value="Packed">Packed</option> */}
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+
+                          <p className="font-semibold text-green-700">
+                            ₹ {order.totalAmount}
+                          </p>
                         </div>
-                      ))
-                    }
-                  </div>
-                  <p className=' bg-[#178404] text-white text-center font-semibold p-0.5 rounded ' >Total {order.totalAmount}</p>
-                </div>
-              ))
+                      </div>
+
+                      {/* Products */}
+
+                      <div className="flex flex-wrap gap-4">
+
+                        {
+                          order.items.map((product, index) => (
+
+                            <div
+                              key={index}
+                              className="w-52 border rounded-lg p-3 flex flex-col gap-2 bg-[#f8fff4]"
+                            >
+
+                              <div className="flex justify-center">
+
+                                <img
+                                  src=""
+                                  alt="order"
+                                  className="w-24 h-24 object-contain"
+                                />
+
+                              </div>
+
+                              <h3 className="font-semibold text-green-700 line-clamp-1">
+                                {product.productname}
+                              </h3>
+
+                              <div className="flex justify-between text-sm">
+
+                                <span>
+                                  Qty : {product.quantity}
+                                </span>
+
+                                <span className="font-semibold">
+                                  ₹ {product.discount_price}
+                                </span>
+
+                              </div>
+
+                              <p
+                                className={`text-white text-center rounded py-1 text-sm ${product.status === "Pending"
+                                    ? "bg-yellow-400"
+                                    : product.status === "Accepted"
+                                      ? "bg-blue-500"
+                                      : product.status === "Packed"
+                                        ? "bg-purple-500"
+                                        : product.status === "Shipped"
+                                          ? "bg-indigo-500"
+                                          : product.status === "Delivered"
+                                            ? "bg-green-600"
+                                            : product.status === "Cancelled"
+                                              ? "bg-red-500"
+                                              : "bg-gray-500"
+                                  }`}
+                              >
+                                {product.status}
+                              </p>
+
+                            </div>
+
+                          ))
+                        }
+
+                      </div>
+
+                    </div>
+
+                  ))
+                }
+
+              </div>
+
             )
           }
+
         </div>
+
       </div>
     </>
   )
