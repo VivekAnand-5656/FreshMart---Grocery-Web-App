@@ -157,6 +157,7 @@ const Home = () => {
   useEffect(() => {
     fetchProducts()
   }, [])
+ 
 
   return (
     <>
@@ -358,6 +359,7 @@ const Home = () => {
             <button className="bg-green-600 text-white px-6 rounded-r-lg hover:bg-green-700">
               Subscribe
             </button>
+             
           </div>
         </section>
 
