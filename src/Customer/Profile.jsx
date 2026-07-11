@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+import TiltedCard from './TiltedCard';
 
 const Profile = () => {
     const { token, role, address, setAddress } = useContext(AuthContext);
@@ -41,9 +42,9 @@ const Profile = () => {
     }, [token]);
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
+        <div className="max-w-3xl mx-auto p-6 bg-[radial-gradient(ellipse_at_bottom_right,var(--tw-gradient-stops))] from-[#14b8a6] via-[#16a34a] to-[#3f6212] ">
 
-            <h1 className="text-3xl font-bold mb-6">
+            <h1 className="text-3xl font-bold mb-6">  {/* Gradient krna hai profile ka   */}
                 My Profile
             </h1>
 

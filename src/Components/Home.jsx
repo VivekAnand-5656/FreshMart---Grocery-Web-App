@@ -5,6 +5,8 @@ import shop from '../assets/shop.png'
 import pic2 from '../assets/gr2.png'
 import pic3 from '../assets/gr3.png'
 
+import shoppingcart from '../Lotties/shopping-cart.gif'
+
 import rice from '../assets/rice.png'
 import dairy from '../assets/dairy.png'
 import snack from '../assets/snack.png'
@@ -231,10 +233,13 @@ const Home = () => {
             <h1 className=' text-[1.2rem] font-bold ' >Products</h1>
             <p onClick={() => navigate("/products")} className=' text-[#000000] cursor-pointer ' >View All ➡️</p>
           </div>
+ 
           <div className=' w-full h-auto flex flex-wrap justify-center items-center gap-3 ' >
             {
               products.length === 0 ? (
-                <p>Product not available</p>
+                <div className=' w-full bg-white flex justify-center items-center ' >
+                  <img src={shoppingcart} alt="" className=' w-20 h-20 '  />
+                </div>
               )
                 : (
                   products.map((product, index) => (

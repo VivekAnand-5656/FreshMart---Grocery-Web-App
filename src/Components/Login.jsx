@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
 import { toast, Slide } from 'react-toastify'
 
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import successanim from '../Lotties/loader.lottie'
+
 const Login = () => {
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -21,9 +24,11 @@ const Login = () => {
       ...formdata, [e.target.name]: e.target.value
     })
   }
+  const [loading, setLoading] = useState(false)
   const handle_login = async (e) => {
     e.preventDefault()
     try {
+      setLoading(true)
       const response = await axios.post(`${apibase}/loginuser`, formdata)
       login(response.data)
       setFormdata({
@@ -32,7 +37,7 @@ const Login = () => {
       })
       if (response.data.role === "customer") {
         navigate("/")
-      } else{
+      } else {
         navigate("/sellerhome")
       }
       toast.success('Login Successfully ✅', {
@@ -47,16 +52,18 @@ const Login = () => {
         transition: Slide,
       });
 
-
     } catch (error) {
       console.log(`Error:- ${error}`)
+    } finally {
+      setLoading(true)
     }
   }
   return (
     <>
       <div className=' w-full h-[90vh] bg-[#d2fcc7] flex justify-center items-center p-2 ' >
+
         <div className='bg-[#ffffff] w-[30%] h-full rounded-2xl p-2 flex flex-col justify-center   ' >
-          <h1 className=' text-3xl font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1>
+          <h1 className=' text-3xl font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1 >
           <p className=' text-center font-bold text-2xl ' >Welcome Back</p>
           <p className=' text-center font-semibold text-[0.9rem] ' >Login to your account</p>
           <form
@@ -81,8 +88,22 @@ const Login = () => {
             >Login</button>
           </form>
           <p className=' text-center font-semibold ' >Don't have an account ? <span onClick={() => navigate("/signup")} className=' text-[#35d703] cursor-pointer ' >Register</span></p>
-        </div>
-      </div>
+        </div >
+
+        {/* ========= Loader ======== */}
+        {
+          loading &&(
+             <div className=' w-full h-full fixed flex justify-center items-center bg-[#2ffb0b76]  ' >
+              <DotLottieReact
+              src={successanim}
+              autoplay
+              loop
+              className=' w-64 h-64 '
+            />
+            </div>
+          )
+        }
+      </div >
     </>
   )
 }
