@@ -17,9 +17,11 @@ import {
     FaHome,
 } from "react-icons/fa";
 import { AuthContext } from '../Context/AuthContext';
+import sellerback from '../assets/seller.png'
+import { Slide, toast } from 'react-toastify';
 
 const Dashboard = () => {
-    const { token,role, user, setUser } = useContext(AuthContext)
+    const { token, role, user, setUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const [totalEarning, setTotalEarning] = useState(0)
     const [totalOrder, setTotalOrder] = useState(0)
@@ -51,7 +53,7 @@ const Dashboard = () => {
         } catch (error) {
             console.log(error.response?.data || error.message);
         }
-    }; 
+    };
 
     // ============== Fetch Total Earning ===========
     const fetch_earning = async () => {
@@ -101,6 +103,49 @@ const Dashboard = () => {
         }
     }
 
+    // ============= Get My Coupons =====
+    const [allcoupons, setAllCoupons] = useState([])
+    const my_coupons = async () => {
+        try {
+            const response = await axios.get(`${apibase}/sellers/getcoupon`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            setAllCoupons(response.data)
+        } catch (error) {
+            console.log(`Error:- ${error}`)
+        }
+    }
+    // ========== Delete Coupon ======
+    const delete_coupon = async (couponId) => {
+        try {
+            const response = await axios.delete(`${apibase}/sellers/deletecoupon/${couponId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            await my_coupons()
+            toast.success(`Coupon Deleted`, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+            });
+        } catch (error) {
+            console.log(`Error:- ${error}`)
+        }
+    }
+
     // ---------- Func Calls -------
     useEffect(() => {
         if (token) {
@@ -108,17 +153,14 @@ const Dashboard = () => {
             fetch_earning()
             fetch_order()
             fetch_myproducts()
-            
+            my_coupons()
         }
     }, [token])
 
     return (
         <div>
-            <h1 className=' text-[1.2rem] font-bold uppercase ' >
-                Dashboard
-            </h1>
             {/* Hero */}
-            <div className=" w-full  bg-linear-to-r from-green-700 via-green-500 to-green-700 rounded-3xl p-8 text-white flex justify-between items-center flex-wrap">
+            <div className=" w-full  bg-[#1c5201] rounded-3xl p-8 text-white flex justify-between items-center flex-wrap">
 
                 <div>
                     <p className="text-lg">Welcome Back, {user.name} 👋</p>
@@ -130,12 +172,12 @@ const Dashboard = () => {
                     <p className="mt-3 text-blue-100 max-w-lg">
                         Manage products, track orders and increase your sales with
                         your seller dashboard.
-                    </p> 
+                    </p>
 
                 </div>
 
                 <img
-                    src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=500"
+                    src={sellerback}
                     className="w-80 rounded-2xl mt-5"
                 />
 
@@ -145,24 +187,105 @@ const Dashboard = () => {
 
             <div className="flex flex-wrap gap-5 mt-8">
 
-                <div className="bg-white rounded-2xl shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
-                    <FaBoxOpen className="text-[1rem] text-blue-600" />
-                    <h2 className="text-[1rem] font-bold ">{totalProducts}</h2>
-                    <p className="text-gray-500">Products</p>
+                <div className="bg-white rounded-2xl flex justify-center items-center gap-2 shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
+                    <FaBoxOpen className="text-[2rem] text-blue-600" />
+                    <div>
+                        <h2 className="text-[1rem] font-bold ">{totalProducts}</h2>
+                        <p className="text-gray-500">Products</p>
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
+                <div className="bg-white rounded-2xl flex justify-center items-center gap-2 shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
                     <FaShoppingBag className="text-[1rem] text-green-600" />
-                    <h2 className="text-[1rem] font-bold ">{totalOrder}</h2>
-                    <p className="text-gray-500">Orders</p>
+                    <div>
+                        <h2 className="text-[1rem] font-bold ">{totalOrder}</h2>
+                        <p className="text-gray-500">Orders</p>
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
+                <div className="bg-white rounded-2xl flex justify-center items-center gap-2 shadow-lg p-2 w-30 h-20 hover:-translate-y-2 duration-300">
                     <FaWallet className="text-[1rem] text-orange-500" />
-                    <h2 className="text-[1rem] font-bold ">₹ {totalEarning} </h2>
-                    <p className="text-gray-500">Revenue</p>
+                    <div>
+                        <h2 className="text-[1rem] font-bold ">₹ {totalEarning} </h2>
+                        <p className="text-gray-500">Revenue</p>
+                    </div>
                 </div>
 
+            </div>
+
+            {/* =============Coupons ============= */}
+            <div className='scrolling bg-[#ffffff] w-[40vw] h-[70vh] mt-5 rounded-2xl p-2 overflow-scroll ' >
+                <h1 className=' text-[1.2rem] font-bold ' >COUPON's</h1>
+                {
+                    allcoupons.length === 0 ? (
+                        <p>No Coupon's</p>
+                    ) : (
+                        allcoupons.map((item, index) => (
+                            <div key={index} className="w-full bg-white rounded-2xl shadow-md border border-gray-200 p-2 mb-2 hover:shadow-xl duration-300">
+
+                                {/* Header */}
+                                <div className="flex justify-between items-center">
+
+                                    <span className="bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full text-xs font-semibold">
+                                        {item.type_discount === "percentage"
+                                            ? `${item.discount}% OFF`
+                                            : `₹${item.discount} OFF`}
+                                    </span>
+
+                                    <span
+                                        className={`text-xs px-1 py-0.5 rounded-full ${item.is_Active
+                                            ? "bg-green-500 text-white"
+                                            : "bg-red-500 text-white"
+                                            }`}
+                                    >
+                                        {item.is_Active ? "Active" : "Inactive"}
+                                    </span>
+
+                                </div>
+
+                                {/* Coupon Code */}
+                                <h2 className="text-2xl font-bold text-gray-800  tracking-wider">
+                                    {item.code}
+                                </h2>
+
+                                <div className="border-t border-dashed "></div>
+
+                                {/* Details */}
+
+                                <div className="flex flex-col gap-1 text-sm text-gray-600">
+
+                                    <div className="flex justify-between">
+                                        <span>Minimum Order</span>
+                                        <span className="font-semibold text-black">
+                                            ₹{item.minimum_value}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between">
+                                        <span>Expires</span>
+                                        <span className="font-semibold text-black">
+                                            {new Date(item.expiry_time).toLocaleDateString()}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                {/* Buttons */}
+
+                                <div className="flex mt-2">
+
+                                    <button 
+                                    onClick={()=>delete_coupon(item._id)}
+                                    className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-sm font-medium duration-300">
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        ))
+                    )
+                }
             </div>
 
             {/* ================= Quick Actions ================= */}

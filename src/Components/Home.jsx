@@ -14,6 +14,7 @@ import fruits from '../assets/fruits.png'
 import bevarage from '../assets/bevarage.png'
 import household from '../assets/household.png'
 import spices from '../assets/spices.png'
+import back from '../assets/background.png'
 import { toast, Slide } from 'react-toastify'
 
 
@@ -159,14 +160,19 @@ const Home = () => {
   useEffect(() => {
     fetchProducts()
   }, [])
- 
+
 
   return (
     <>
       <div>
 
         {/* ======== Upper Banner =========== */}
-        <div className=' w-full h-[80vh] p-2 bg-[#d2fcc7] flex justify-center items-center ' >
+        <div className='  w-full h-[80vh] p-2 bg-[#ffffffd3] flex justify-center items-center z-50 ' >
+          {/* ----------- Background image ---------- */}
+          <div
+            className="absolute h-[70vh] top-[10vh] inset-0 bg-cover bg-center opacity-30 "
+            style={{ backgroundImage: `url(${back})` }}
+          ></div>
           {/* --- Left ---- */}
           <div className=' w-[40%] p-2 ' >
             <h1 className=' text-5xl font-bold  ' >Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' > Doorstep </span> </h1>
@@ -233,12 +239,12 @@ const Home = () => {
             <h1 className=' text-[1.2rem] font-bold ' >Products</h1>
             <p onClick={() => navigate("/products")} className=' text-[#000000] cursor-pointer ' >View All ➡️</p>
           </div>
- 
+
           <div className=' w-full h-auto flex flex-wrap justify-center items-center gap-3 ' >
             {
               products.length === 0 ? (
                 <div className=' w-full bg-white flex justify-center items-center ' >
-                  <img src={shoppingcart} alt="" className=' w-20 h-20 '  />
+                  <img src={shoppingcart} alt="" className=' w-20 h-20 ' />
                 </div>
               )
                 : (
@@ -364,7 +370,7 @@ const Home = () => {
             <button className="bg-green-600 text-white px-6 rounded-r-lg hover:bg-green-700">
               Subscribe
             </button>
-             
+
           </div>
         </section>
 

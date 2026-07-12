@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import ric from '../assets/rice.png'
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 const Orders = () => {
   const { token } = useContext(AuthContext);
@@ -19,6 +20,29 @@ const Orders = () => {
       });
 
       setOrders(response.data);
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    }
+  };
+
+  // ========= Rating ===========
+  const [ratings, setRatings] = useState({})
+  const rating = async (productId, rate) => {
+    try {
+      await axios.put(
+        `${apibase}/customer/rateproduct/${productId}?rate=${rate}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ); 
+      setRatings((prev) => ({
+        ...prev,
+        [productId]: rate,
+      }));
+ 
     } catch (error) {
       console.log(error.response?.data || error.message);
     }
@@ -42,14 +66,13 @@ const Orders = () => {
           orders.map((order) => (
             <div
               key={order._id}
-              className="w-full  bg-white shadow-md rounded-xl p-2 mb-2"
-            >
+              className="w-full  bg-white shadow-md rounded-xl p-2 mb-2" >
 
               {/* Items */}
               {order.items.map((item) => (
                 <div
                   key={item.product_id}
-                  className="flex justify-between items-center border-b p-2"
+                  className="flex flex-wrap justify-between items-center border-b p-2"
                 >
                   <img src={ric} alt="" className=" w-20 h-20 " />
                   <div className=" flex gap-2 " >
@@ -68,13 +91,27 @@ const Orders = () => {
 
                   <span
                     className={`px-3 py-1 rounded-full text-sm text-white ${item.status === "Delivered"
-                        ? "bg-green-500"
-                        : item.status === "Cancelled"
+                      ? "bg-green-500"
+                      : item.status === "Cancelled"
                         ? "bg-[#f81b1b]"
                         : "bg-yellow-500"
                       }`}
                   >
                     {item.status}
+                  </span>
+                  <span className="w-full flex gap-1 justify-end">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        onClick={() => rating(item.product_id, star)}
+                      >
+                        {star <= (ratings[item.product_id] || 0) ? (
+                          <FaStar className="text-yellow-500 cursor-pointer" />
+                        ) : (
+                          <FaRegStar className="text-gray-400 cursor-pointer" />
+                        )}
+                      </button>
+                    ))}
                   </span>
                 </div>
               ))}

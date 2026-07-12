@@ -127,7 +127,7 @@ const Orders = () => {
 
                     <div
                       key={index}
-                      className="bg-white rounded-xl shadow p-4"
+                      className="bg-white rounded-xl shadow p-4 "
                     >
 
                       {/* Order Header */}
@@ -168,7 +168,7 @@ const Orders = () => {
 
                             <div
                               key={index}
-                              className="w-52 border rounded-lg p-3 flex flex-col gap-2 bg-[#f8fff4]"
+                              className="w-52 border cursor-pointer  rounded-lg p-3 flex flex-col gap-2 bg-[#f8fff4] transition-all duration-500 hover:-translate-y-2 "
                             >
 
                               <div className="flex justify-center">

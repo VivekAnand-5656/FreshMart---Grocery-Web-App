@@ -8,13 +8,13 @@ import AddProduct from "./AddProduct";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import MyProducts from "./MyProducts";
-import axios from "axios"; 
+import axios from "axios";
 
-const SellerHome = () => { 
+const SellerHome = () => {
 
     const apibase = "https://grocery-kirana-store.onrender.com";
 
-    
+
 
     // =========== Render Pages ===========
     const [page, setPage] = useState("dashboard");

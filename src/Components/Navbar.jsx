@@ -6,6 +6,7 @@ import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { FaHeart, FaSearch, FaRegWindowClose, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { AuthContext } from '../Context/AuthContext';
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FcShop } from "react-icons/fc";
 
 import axios from 'axios';
 
@@ -54,7 +55,7 @@ const Navbar = () => {
     return (
         <div className=' w-full h-[10vh] flex justify-between font-semibold p-2 shadow-2xs '
         >
-            <h1 className=' text-2xl font-bold uppercase text-[#000000]  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1>
+            <h1 className=' text-2xl font-bold uppercase text-[#000000] flex justify-center items-center ' ><FcShop/> Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1>
             <div className='bg-[#c1f7b0] flex justify-center items-center gap-1.5 shadow-2xs p-1 rounded w-[30%] ' >
                 <input type="search" name="search"
                     placeholder=' Search Products... '
@@ -87,6 +88,7 @@ const Navbar = () => {
                                 <li><NavLink to="/" className={({ isActive }) => isActive ? ' text-[#259d00] border-b-2 text-[0.8rem] border-b-[#259d00] rounded p-1.5' : ' text-[#000000] p-1.5 text-[0.8rem] hover:text-[#259d00] transition-all duration-500 ease-in-out '} >Home</NavLink></li>
                                 <li><NavLink to="orders" className={({ isActive }) => isActive ? ' text-[#259d00] border-b-2 text-[0.8rem]  border-b-[#259d00] rounded p-1.5' : ' text-[#000000] p-1.5 text-[0.8rem] hover:text-[#259d00] transition-all duration-500 ease-in-out '} >My Orders</NavLink></li>
                                 <li><NavLink to="carts" className={({ isActive }) => isActive ? ' text-[#259d00] border-b-2 text-[0.8rem]  border-b-[#259d00] rounded p-1.5' : ' text-[#000000] p-1.5 text-[0.8rem] hover:text-[#259d00] transition-all duration-500 ease-in-out '} ><FaCartShopping /></NavLink></li>
+                                <li className=" text-[#259d00] text-[0.7rem] cursor-pointer hover:bg-[#ffffff] hover:text-[#259d00] transition-all duration-500 ease-in-out px-1 rounded line-clamp-1 flex " ><FaLocationDot className=' text-black text-[1.2rem] ' /> {selectAddress.area} {selectAddress.house_no} {selectAddress.city} {selectAddress.pincode} </li>
                             </ul >
                         )
                 }
@@ -96,7 +98,7 @@ const Navbar = () => {
                         <>
 
                             <ul className=' flex justify-center items-center gap-2 ' >
-                                <li className=" text-[#259d00] text-[0.7rem] cursor-pointer hover:bg-[#ffffff] hover:text-[#259d00] transition-all duration-500 ease-in-out px-1 rounded line-clamp-1 flex " ><FaLocationDot className=' text-black text-[1.2rem] ' /> {selectAddress.area} {selectAddress.house_no} {selectAddress.city} {selectAddress.pincode} </li>
+
                             </ul>
                             {/* // -------------- Drop Down --- */}
                             <div className="relative">
@@ -117,9 +119,9 @@ const Navbar = () => {
                                             flex flex-col gap-3
                                             transform transition-all duration-300 ease-out
                                             ${showHam
-                                                ? "translate-x-0 opacity-100 visible"
-                                                : "translate-y-10  opacity-0 invisible pointer-events-none"
-                                    }`}
+                                            ? "translate-x-0 opacity-100 visible"
+                                            : "translate-y-10  opacity-0 invisible pointer-events-none"
+                                        }`}
                                 >
                                     <li
                                         onClick={() => {
