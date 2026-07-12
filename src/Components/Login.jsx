@@ -93,7 +93,7 @@ const Login = () => {
         {/* ========= Loader ======== */}
         {
           loading &&(
-             <div className=' w-full h-full fixed flex justify-center items-center bg-[#2ffb0b76]  ' >
+             <div className=' w-full h-full fixed flex justify-center items-center bg-[#ffffff76]  ' >
               <DotLottieReact
               src={successanim}
               autoplay

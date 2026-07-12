@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast, Slide } from 'react-toastify';
 // -------- Icons -----------
-import { FaCartShopping } from "react-icons/fa6";
+import { FaCartShopping, FaLocationDot } from "react-icons/fa6";
 import { FaHeart, FaSearch, FaRegWindowClose, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { AuthContext } from '../Context/AuthContext';
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -96,7 +96,7 @@ const Navbar = () => {
                         <>
 
                             <ul className=' flex justify-center items-center gap-2 ' >
-                                <li className=" text-[#259d00] text-[0.7rem] cursor-pointer hover:bg-[#ffffff] hover:text-[#259d00] transition-all duration-500 ease-in-out px-1 rounded line-clamp-1 " > {selectAddress.area} {selectAddress.house_no} {selectAddress.city} {selectAddress.pincode} </li>
+                                <li className=" text-[#259d00] text-[0.7rem] cursor-pointer hover:bg-[#ffffff] hover:text-[#259d00] transition-all duration-500 ease-in-out px-1 rounded line-clamp-1 flex " ><FaLocationDot className=' text-black text-[1.2rem] ' /> {selectAddress.area} {selectAddress.house_no} {selectAddress.city} {selectAddress.pincode} </li>
                             </ul>
                             {/* // -------------- Drop Down --- */}
                             <div className="relative">

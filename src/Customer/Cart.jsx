@@ -6,6 +6,8 @@ import { toast, Slide } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { ImCross } from "react-icons/im";
 import emptycart from '../Lotties/empty-cart.png'
+import { BiSolidCoupon } from "react-icons/bi";
+import { LuPanelRightClose } from "react-icons/lu";
 
 
 const Cart = () => {
@@ -237,11 +239,79 @@ const Cart = () => {
             console.log(`Error:- ${error}`)
         }
     }
+
+    // ============== Apply Coupon =============
+    const [isCoupon, setIsCoupon] = useState(false)
+    const [coupon, setCoupon] = useState("")
+    const [finalprice, setFinalprice] = useState(0)
+    const [allCoupons, setAllCoupons] = useState([])
+
+    const fetch_coupon = async () => {
+        try {
+            const response = await axios.get(`${apibase}/customer/getcoupon`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            setAllCoupons(response.data)
+
+        } catch (error) {
+            console.log(`Error:- ${error}`)
+        }
+    }
+
+    // ============ Apply Coupon ============
+    const apply_coupon = async (cpn) => {
+        try {
+            const response = await axios.post(`${apibase}/customer/applycoupon/${cpn}`, {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            await fetch_carts()
+            setCoupon(response.data.coupon)
+            setFinalprice(response.data.final_price)
+            setIsCoupon(false)
+        } catch (error) {
+            console.log(`Error:- ${error}`)
+            toast.error(`${error.response.data.detail}`, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+            });
+        }
+    }
+
     // ========== CheckOut ============
     const [success, setSuccess] = useState(false)
     const checked_out = async () => {
         try {
+            if (Object.keys(selectAddress).length === 0) {
+                toast.error('Please select address', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                });
+                return;
+            }
             setSuccess(true)
+
             const response = await axios.put(`${apibase}/customer/placeorder`,
                 selectAddress,
                 {
@@ -251,6 +321,7 @@ const Cart = () => {
                 }
 
             )
+
             toast.success('Order Placed Successfully ✅', {
                 position: "top-center",
                 autoClose: 1000,
@@ -272,10 +343,13 @@ const Cart = () => {
         }
     }
 
+
+
     useEffect(() => {
         if (token) {
             fetch_carts()
             getAddress()
+
         }
     }, [token])
 
@@ -362,7 +436,7 @@ const Cart = () => {
                 </div>
 
                 {/* Right Side */}
-                <div className="w-80">
+                <div className="w-80 relative ">
                     <div className="bg-white border shadow-md rounded-xl p-5  ">
 
                         <h2 className="text-xl font-bold mb-4">
@@ -371,7 +445,10 @@ const Cart = () => {
 
                         <p className=' flex justify-between items-center font-semibold  '>Total Items : <span>{carts.length}</span></p>
                         <p className=' flex justify-between items-center font-semibold ' >Delivery Charges : <span className=' text-[#26cb05] ' >Free</span> </p>
-                        <p className=' flex justify-between items-center font-semibold ' >Total Ammount : <span>₹ {total}</span> </p>
+                        <p className=' flex justify-between items-center font-semibold ' >Total Ammount : <span>₹ {
+                            finalprice === 0 ? (total) :
+                                (finalprice)
+                        }</span> </p>
 
                         <hr className="my-4" />
 
@@ -384,7 +461,20 @@ const Cart = () => {
 
                     </div>
                     {/* ---- Address ---- */}
-                    <div className="bg-white  shadow-md rounded-xl p-5 sticky top-5 flex flex-col ">
+                    <div className="bg-white gap-2  shadow-md rounded-xl p-5 sticky top-5 flex flex-col ">
+
+                        <div className=' rounded border border-[#4ddd0a] flex ' >
+                            <input type="text" placeholder={coupon === "" ? "COUPON" : coupon}
+                                className=' outline-0 w-[70%] ' />
+                            <button
+                                onClick={() => {
+                                    setIsCoupon(true)
+                                    fetch_coupon()
+                                }}
+                                className="w-[30%] h-full self-end flex justify-center items-center  bg-green-600 text-white p-1 text-[0.7rem] cursor-pointer ">
+                                <BiSolidCoupon /> All Offer's
+                            </button>
+                        </div>
                         <button
                             onClick={() => {
                                 getAddress()
@@ -402,7 +492,7 @@ const Cart = () => {
                     {/* ------- All Address ----- */}
                     <div
                         className={`w-[40vw] h-[50vh] bg-white rounded-xl shadow-lg fixed top-20 left-95 z-50 p-4 overflow-y-auto transition-all duration-300
-    ${isAddres
+                    ${isAddres
                                 ? "translate-y-5 opacity-100 visible"
                                 : "-translate-y-20 opacity-0 invisible"
                             }`}
@@ -461,13 +551,12 @@ const Cart = () => {
                     </div>
                     {/* =========== Payment Success =========== */}
                     {
-                        <div 
-                        className={`w-full h-full flex flex-col fixed top-0 left-0 bg-[#ffffff76]  items-center justify-center transition-all duration-500 ease-in-out 
-                        ${
-                            success
-                            ?" visible scale-105 "
-                            :" invisible scale-0 "
-                        }
+                        <div
+                            className={`w-full h-full flex flex-col fixed top-0 left-0 bg-[#ffffff76]  items-center justify-center transition-all duration-500 ease-in-out 
+                        ${success
+                                    ? " visible scale-105 "
+                                    : " invisible scale-0 "
+                                }
                         `} >
 
                             <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center animate-pulse">
@@ -497,6 +586,50 @@ const Cart = () => {
 
                         </div>
                     }
+
+                    {/* =============== All Coupons ============ */}
+                    <div className={`fixed top-15 right-0 w-[20vw] h-[90vh] flex flex-col gap-2 p-2 rounded-l-2xl  bg-[#196203] transition-all duration-500 ease-linear 
+                        ${isCoupon ? " visible translate-x-0 opacity-100 "
+                            : " invisible translate-x-20 opacity-0 "
+                        }
+                        `} >
+                        <LuPanelRightClose
+                            onClick={() => setIsCoupon(false)}
+                            className=' text-[1.5rem] font-semibold left-0 z-50 absolute cursor-pointer text-white ' />
+                        <p className=' text-center font-semibold text-white uppercase ' >All Coupon's</p>
+                        {
+                            allCoupons.length === 0 ? (
+                                <p>No Coupons</p>
+                            ) : (
+                                allCoupons.map((cpn, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-full bg-white rounded-lg p-2"
+                                    >
+                                        <div className="flex justify-around items-center">
+                                            <p className=' font-bold text-[#1144ec] ' >{cpn.code}</p>
+
+                                            <p>
+                                                {cpn.type_discount === "percentage"
+                                                    ? `${cpn.discount}%`
+                                                    : `₹${cpn.discount}`}
+                                            </p>
+
+                                            <button
+                                                onClick={() => apply_coupon(cpn.code)}
+                                                className="bg-[#f98705] px-1 font-semibold text-white rounded text-[0.8rem] cursor-pointer">
+                                                Apply
+                                            </button>
+                                        </div>
+
+                                        <p className="text-sm text-gray-500 mt-2">
+                                            Coupon will be applied on minimum order {cpn.minimum_value}
+                                        </p>
+                                    </div>
+                                ))
+                            )
+                        }
+                    </div>
 
 
                 </div>
