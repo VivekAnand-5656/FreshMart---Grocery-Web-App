@@ -52,7 +52,7 @@ const Signup = () => {
   return (
     <>
       <div className=' w-full h-auto bg-[#d2fcc7] flex justify-center items-center p-2 ' >
-        <div className='bg-[#ffffff] sm:w-[30%] w-[80%] h-full rounded-2xl p-2 flex flex-col justify-center   ' >
+        <div className='bg-[#ffffff] sm:w-[40%] w-[80%] h-auto rounded-2xl p-4 flex flex-col justify-center   ' >
           <h1 className=' sm:text-[1.2em] font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1 >
           <p className=' text-center font-semibold text-[0.9rem] ' >Create to your account</p>
           <form
