@@ -166,39 +166,47 @@ const Home = () => {
 
   return (
     <>
-      <div className=' w-full flex flex-col ' >
+      <div className=' w-full flex flex-col p-2' > 
         {/* ======== Upper Banner =========== */}
-        <div className='  w-full sm:h-[80vh] h-[50vh] sm:p-2 p-1 bg-[#ffffffd3] flex sm:flex-row flex-col justify-center items-center z-50 ' >
+        <div className=' w-full sm:h-[75vh] h-[70vh] relative overflow-hidden bg-[#f4fff0] flex sm:flex-row flex-col justify-center items-center gap-4 sm:gap-6 px-4 sm:px-10 py-6 sm:py-0 ' >
 
           {/* ----------- Background image ---------- */}
           <div
-            className="absolute sm:h-[70vh] h-[50%] top-[10vh] inset-0 bg-cover bg-center opacity-30 "
+            className="absolute sm:visible invisible inset-0 bg-cover bg-center opacity-20 "
             style={{ backgroundImage: `url(${back})` }}
           ></div>
 
           {/* --- Left ---- */}
-          <div className=' sm:w-[40%] h-[40%] w-full sm:p-2 sm:text-left text-center ' >
-            <h1 className=' sm:text-[1.5rem] text-[1rem] font-bold  ' >Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' > Doorstep </span> </h1>
-            <p className=' sm:text-[1rem] text-[0.7rem] ' >Get the best quality products at the best prices.</p>
+          <div className=' sm:w-[45%] w-full flex flex-col gap-3 sm:gap-4 sm:text-left text-center z-10 ' >
+            <h1 className=' sm:text-[2.4rem] text-[1.4rem] leading-tight font-bold text-[#1a1a1a] ' >
+              Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' >Doorstep</span>
+            </h1>
+
+            <p className=' sm:text-[1.1rem] text-[0.85rem] text-gray-600 ' >
+              Get the best quality products at the best prices.
+            </p>
+
             <button
               onClick={() => navigate("/products")}
-              className=' bg-[#259d00] sm:visible invisible text-white p-2 font-semibold rounded cursor-pointer ' >Shop Now</button>
+              className=' bg-[#259d00] hover:bg-[#1e7d00] text-white px-6 py-2.5 w-fit sm:mx-0 mx-auto font-semibold rounded-lg cursor-pointer transition-all duration-300 shadow-md ' >
+              Shop Now
+            </button>
           </div>
 
           {/* --- Right ---- */}
-          <div className='sm:w-[60%] w-full h-[60%]  relative flex justify-center items-center ' >
+          <div className='sm:w-[55%] w-full h-[45%] sm:h-full relative flex justify-center items-center z-10 ' >
 
             <img src={pic2} alt=""
-              className='sm:visible invisible absolute h-[70%] left-10 bottom-10  '
+              className='sm:visible invisible absolute h-[55%] left-4 sm:left-8 bottom-6 drop-shadow-lg '
             />
             <img src={pic3} alt=""
-              className='sm:visible invisible absolute h-[40%] bottom-0 left-50 z-50 '
+              className='sm:visible invisible absolute h-[35%] right-[35%] bottom-0 z-20 drop-shadow-lg '
             />
             <img src={shop} alt=""
-              className={`absolute h-full right-0 w-[80%] sm:w-[60%]
-                transition-all duration-500 ease-out
-                ${load ? "scale-100 opacity-100" : "scale-90 opacity-0"}
-              `}
+              className={`absolute h-full sm:h-full right-0 w-[85%] sm:w-[55%] object-contain
+        transition-all duration-500 ease-out
+        ${load ? "scale-100 opacity-100" : "scale-90 opacity-0"}
+      `}
             />
           </div>
         </div>

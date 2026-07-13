@@ -52,7 +52,7 @@ const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false)
 
     return (
-        <div className=' w-full h-[10vh] flex justify-between items-center font-semibold p-2 shadow-2xs relative '>
+        <div className=' w-full h-[10vh] flex justify-between items-center font-semibold p-2 shadow-2xs relative  '>
 
             {/* -------- Logo -------- */}
             <h1 className=' text-2xl font-bold uppercase text-[#000000] flex justify-center items-center '>
