@@ -157,56 +157,72 @@ const Home = () => {
     if (token) fetchProfile();
   }, [token]);
 
+  const [load, setLoad] = useState(false)
   useEffect(() => {
+    setLoad(true)
     fetchProducts()
   }, [])
 
 
   return (
     <>
-      <div>
-
+      <div className=' w-full flex flex-col ' >
         {/* ======== Upper Banner =========== */}
-        <div className='  w-full h-[80vh] p-2 bg-[#ffffffd3] flex justify-center items-center z-50 ' >
+        <div className='  w-full sm:h-[80vh] h-[50vh] sm:p-2 p-1 bg-[#ffffffd3] flex sm:flex-row flex-col justify-center items-center z-50 ' >
+
           {/* ----------- Background image ---------- */}
           <div
-            className="absolute h-[70vh] top-[10vh] inset-0 bg-cover bg-center opacity-30 "
+            className="absolute sm:h-[70vh] h-[50%] top-[10vh] inset-0 bg-cover bg-center opacity-30 "
             style={{ backgroundImage: `url(${back})` }}
           ></div>
+
           {/* --- Left ---- */}
-          <div className=' w-[40%] p-2 ' >
-            <h1 className=' text-5xl font-bold  ' >Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' > Doorstep </span> </h1>
-            <p>Get the best quality products at the best prices.</p>
+          <div className=' sm:w-[40%] h-[40%] w-full sm:p-2 sm:text-left text-center ' >
+            <h1 className=' sm:text-[1.5rem] text-[1rem] font-bold  ' >Fresh Groceries Delivered to Your <span className=' text-[#258e05] ' > Doorstep </span> </h1>
+            <p className=' sm:text-[1rem] text-[0.7rem] ' >Get the best quality products at the best prices.</p>
             <button
               onClick={() => navigate("/products")}
-              className=' bg-[#259d00] text-white p-2 font-semibold rounded cursor-pointer ' >Shop Now</button>
+              className=' bg-[#259d00] sm:visible invisible text-white p-2 font-semibold rounded cursor-pointer ' >Shop Now</button>
           </div>
+
           {/* --- Right ---- */}
-          <div className=' w-[60%] h-full relative flex justify-center items-center ' >
+          <div className='sm:w-[60%] w-full h-[60%]  relative flex justify-center items-center ' >
 
             <img src={pic2} alt=""
-              className=' absolute h-[70%] left-10 bottom-10  '
+              className='sm:visible invisible absolute h-[70%] left-10 bottom-10  '
             />
             <img src={pic3} alt=""
-              className=' absolute h-[40%] bottom-0 left-50 z-50 '
+              className='sm:visible invisible absolute h-[40%] bottom-0 left-50 z-50 '
             />
             <img src={shop} alt=""
-              className=' absolute h-full w-[60%] right-0  '
+              className={`absolute h-full right-0 w-[80%] sm:w-[60%]
+                transition-all duration-500 ease-out
+                ${load ? "scale-100 opacity-100" : "scale-90 opacity-0"}
+              `}
             />
           </div>
         </div>
 
         {/* ============= Features ============ */}
-        <div className=' w-full flex justify-center items-center gap-4 p-2 ' >
+        <div className="w-full flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 p-2">
           {features.map((card, index) => {
             const Icon = card.icon;
 
             return (
-              <div key={index} className="rounded p-4 flex items-center gap-3">
-                <Icon className="text-[#259d00] text-3xl" />
-                <div>
-                  <p className="font-semibold">{card.title}</p>
-                  <p className="text-gray-500">{card.pr}</p>
+              <div
+                key={index}
+                className="flex items-center gap-2 sm:gap-3 border rounded-lg p-2 sm:p-3 w-[48%] sm:w-[230px] md:flex-1 min-w-[150px] max-w-[260px]"
+              >
+                <Icon className="text-[#259d00] text-xl sm:text-2xl md:text-3xl shrink-0" />
+
+                <div className="min-w-0">
+                  <p className="font-semibold text-[11px] sm:text-sm md:text-base leading-tight">
+                    {card.title}
+                  </p>
+
+                  <p className="text-gray-500 text-[9px] sm:text-xs md:text-sm leading-tight">
+                    {card.pr}
+                  </p>
                 </div>
               </div>
             );
@@ -215,8 +231,8 @@ const Home = () => {
 
         {/* ========= Shop By Catagory ===== */}
         <div>
-          <h1 className=' text-[1.2rem] font-bold ' >Shpo By Category</h1>
-          <div className=' w-full h-auto p-2 flex justify-evenly items-center gap-2 ' >
+          <h1 className=' sm:text-[1.2rem] text-[1rem] font-bold ' >Shpo By Category</h1>
+          <div className="w-full flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 p-2">
             {
               catagories.map((item, index) => {
                 const Icon = item.icon
@@ -236,7 +252,7 @@ const Home = () => {
         {/* =============== Products Cards ========== */}
         <div className=' w-full bg-[#d2fcc7] p-2 ' >
           <div className=' flex justify-between ' >
-            <h1 className=' text-[1.2rem] font-bold ' >Products</h1>
+            <h1 className=' sm:text-[1.2rem] text-[1rem] font-bold ' >Products</h1>
             <p onClick={() => navigate("/products")} className=' text-[#000000] cursor-pointer ' >View All ➡️</p>
           </div>
 
@@ -285,8 +301,8 @@ const Home = () => {
         </div>
 
         {/* ========== Why Choose Us ====== */}
-        <section className="py-10 px-6">
-          <h2 className="text-3xl font-bold text-center mb-8">
+        <section className="sm:py-10 sm:px-6 p-2">
+          <h2 className="sm:text-[1.2rem] text-[1.2rem] text-center font-bold">
             Why Choose Us?
           </h2>
 
@@ -326,8 +342,8 @@ const Home = () => {
         </section>
 
         {/* ===========  Reviews ====== */}
-        <section className="py-10 px-6 bg-gray-50">
-          <h2 className="text-3xl font-bold text-center mb-8">
+        <section className="sm:py-10 sm:px-6 p-2 bg-gray-50">
+          <h2 className="sm:text-[1.2rem] text-[1.2rem] text-center font-bold">
             Customer Reviews
           </h2>
 
@@ -351,7 +367,7 @@ const Home = () => {
         </section>
 
         {/* ======= NewsLetter ===== */}
-        <section className="py-12 px-6 text-center">
+        <section className="sm:py-12 sm:px-6 p-2 text-center shadow shadow-[#646363] ">
           <h2 className="text-3xl font-bold">
             Subscribe to Our Newsletter
           </h2>
@@ -360,14 +376,14 @@ const Home = () => {
             Get the latest offers and discounts.
           </p>
 
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-6  ">
             <input
               type="email"
               placeholder="Enter your email"
-              className="border border-gray-300 px-4 py-2 rounded-l-lg w-72 outline-none"
+              className="border border-gray-300 px-4 py-2 rounded-l-lg sm:w-72 w-[80%]  outline-none"
             />
 
-            <button className="bg-green-600 text-white px-6 rounded-r-lg hover:bg-green-700">
+            <button className="bg-green-600 text-white sm:px-6 px-2 rounded-r-lg hover:bg-green-700">
               Subscribe
             </button>
 
