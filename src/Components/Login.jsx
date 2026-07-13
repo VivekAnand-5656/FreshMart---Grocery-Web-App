@@ -62,9 +62,9 @@ const Login = () => {
     <>
       <div className=' w-full h-[90vh] bg-[#d2fcc7] flex justify-center items-center p-2 ' >
 
-        <div className='bg-[#ffffff] w-[30%] h-full rounded-2xl p-2 flex flex-col justify-center   ' >
-          <h1 className=' text-3xl font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1 >
-          <p className=' text-center font-bold text-2xl ' >Welcome Back</p>
+        <div className='bg-[#ffffff] sm:w-[30%] w-[80%] h-full rounded-2xl p-2 flex flex-col justify-center   ' >
+          <h1 className=' sm:text-[1.2em] font-bold uppercase text-[#000000] text-center  ' >Fresh<span className=' text-[#35d703] ' >Mart</span>  </h1 >
+          <p className=' text-center font-bold text-2xl ' >Welcome Back 👋 </p>
           <p className=' text-center font-semibold text-[0.9rem] ' >Login to your account</p>
           <form
             onSubmit={handle_login}
@@ -92,14 +92,14 @@ const Login = () => {
 
         {/* ========= Loader ======== */}
         {
-          loading &&(
-             <div className=' w-full h-full fixed flex justify-center items-center bg-[#ffffff76]  ' >
+          loading && (
+            <div className=' w-full h-full fixed flex justify-center items-center bg-[#ffffff76]  ' >
               <DotLottieReact
-              src={successanim}
-              autoplay
-              loop
-              className=' w-64 h-64 '
-            />
+                src={successanim}
+                autoplay
+                loop
+                className=' w-64 h-64 '
+              />
             </div>
           )
         }
