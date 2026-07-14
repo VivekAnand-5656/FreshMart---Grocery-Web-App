@@ -100,14 +100,14 @@ const Profile = () => {
     return (
         <div className="w-full bg-[#ebefe9] mx-auto p-2 flex flex-col justify-center items-center ">
             {/* -------------- Top ------------- */}
-            <div className=" w-[60%] h-[30vh] rounded-2xl bg-[#236403] p-2 flex justify-between items-center text-white " >
+            <div className=" sm:w-[60%] w-full h-[30vh] sm:rounded-2xl rounded bg-[#236403] p-2 flex justify-between items-center text-white " >
                 {/* ----------- left --------------- */}
-                <div className=" w-[50%] h-full flex justify-center items-center " >
+                <div className=" sm:w-[50%] w-[70%] h-full flex justify-center items-center " >
                     <div className="  " >
-                        <img src={userpic} alt="profile" className=" w-20 h-20 rounded-full " />
-                        <h1 className=" font-semibold font-sans " >{user.name}</h1>
+                        <img src={userpic} alt="profile" className=" sm:w-20 w-20 h-20 sm:h-20  rounded-full " />
+                        <h1 className=" font-semibold font-sans text-[0.8rem] " >{user.name}</h1>
                     </div>
-                    <div>
+                    <div className=" sm:flex hidden " >
                         <p className=" text-[1.2rem] " >Welcome back, {user?.name?.split(" ")[0]}!👋</p>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ const Profile = () => {
             </div>
 
             {/* ---------------------------------------------- */}
-            <div className="bg-white w-[55%] shadow-md rounded-2xl -translate-y-5 p-6">
+            <div className="bg-white sm:w-[55%] w-full shadow-md rounded-2xl -translate-y-5 p-6">
 
                 <button
                     onClick={() => setShowUpdate(true)}
@@ -186,7 +186,7 @@ const Profile = () => {
             </div>
             {/* ================ Profile Update ============= */}
             <div
-                className={`w-[40%] bg-white rounded-2xl shadow-xl p-5 absolute z-50 transition-all duration-300
+                className={`sm:w-[40%] w-[80%] bg-white rounded-2xl shadow-xl sm:p-5 p-2 top-[20%] border border-[#1aed0b] absolute z-50 transition-all duration-300
     ${showUpdate
                         ? "visible translate-y-0 opacity-100"
                         : "invisible -translate-y-20 opacity-0"
@@ -197,13 +197,13 @@ const Profile = () => {
                     className="absolute top-3 right-3 text-red-500 cursor-pointer hover:text-red-700"
                 />
 
-                <h1 className="text-2xl font-semibold text-green-700 mb-5">
+                <h1 className="sm:text-2xl text-[1rem] font-semibold text-green-700 mb-5">
                     Update Profile
                 </h1>
 
-                <form 
-                onSubmit={updateprofile}
-                className="flex flex-wrap gap-3">
+                <form
+                    onSubmit={updateprofile}
+                    className="flex flex-wrap sm:gap-3 gap-1 ">
 
                     <input
                         type="text"
@@ -212,7 +212,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="Full Name"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <input
@@ -222,7 +222,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="example@gmail.com"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <input
@@ -232,7 +232,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="+91 **********"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <input
@@ -242,7 +242,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="City"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <input
@@ -252,7 +252,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="State"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <input
@@ -262,7 +262,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="Pincode"
                         required
-                        className="w-[48%] border border-gray-300 rounded-lg p-2 outline-none focus:border-green-600"
+                        className="w-[48%] border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     />
 
                     <textarea
@@ -271,7 +271,7 @@ const Profile = () => {
                         onChange={handlechange}
                         placeholder="Street Address..."
                         rows="3"
-                        className="w-full border border-gray-300 rounded-lg p-2 outline-none resize-none focus:border-green-600"
+                        className="w-full border border-gray-300 sm:rounded-lg rounded sm:p-2 p-1 outline-none focus:border-green-600"
                     ></textarea>
 
                     <button

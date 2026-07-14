@@ -69,9 +69,9 @@ const Orders = () => {
               className="w-full  bg-white shadow-md rounded-xl p-2 mb-2" >
 
               {/* Items */}
-              {order.items.map((item) => (
+              {order.items.map((item,index) => (
                 <div
-                  key={item.product_id}
+                  key={index}
                   className="flex flex-wrap justify-between items-center border-b p-2"
                 >
                   <img src={ric} alt="" className=" w-20 h-20 " />
@@ -100,9 +100,9 @@ const Orders = () => {
                     {item.status}
                   </span>
                   <span className="w-full flex gap-1 justify-end">
-                    {[1, 2, 3, 4, 5].map((star) => (
+                    {[1, 2, 3, 4, 5].map((star,index) => (
                       <button
-                        key={star}
+                        key={index}
                         onClick={() => rating(item.product_id, star)}
                       >
                         {star <= (ratings[item.product_id] || 0) ? (

@@ -355,15 +355,15 @@ const Cart = () => {
 
     return (
         <>
-            <div className="w-full h-screen flex gap-4 p-2 overflow-hidden">
+            <div className="w-full sm:h-screen flex sm:flex-row flex-col gap-4 p-2 overflow-hidden  ">
                 {/* Left Side */}
-                <div className="scrolling w-[70%] h-full bg-[#a9fa95] rounded-2xl p-2 flex flex-col overflow-y-auto overflow-x-hidden">
+                <div className="scrolling sm:w-[70%] w-full sm:h-full h-screen bg-[#a9fa95] sm:rounded-2xl rounded p-2 flex flex-col overflow-y-auto overflow-x-hidden ">
 
                     <h1 className="text-2xl font-bold">
                         My Carts
                     </h1>
 
-                    <div className="  flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center gap-2">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center gap-2">
                         {carts.length === 0 ? (
                             <div className='h-[90vh] w-full flex flex-col justify-center items-center ' >
                                 <img src={emptycart} alt="emptycart" className=' w-30 h-30 animate-bounce transition-all duration-1000 ' />
@@ -372,11 +372,10 @@ const Cart = () => {
                             carts.map((cart) => (
                                 <div
                                     key={cart._id}
-                                    className="w-[60%] h-20  bg-white rounded-xl shadow-md p-2 flex justify-between items-center gap-2 "
+                                    className="w-full sm:w-[60%] bg-white rounded-lg shadow-md p-2 flex items-center gap-2"
                                 >
-
                                     {/* Image */}
-                                    <div className="w-32 h-full flex justify-center items-center">
+                                    <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
                                         <img
                                             src={cart.allcarts.image_url}
                                             alt={cart.allcarts.productname}
@@ -384,50 +383,56 @@ const Cart = () => {
                                         />
                                     </div>
 
-                                    {/* Product Details */}
-                                    <div className="flex gap-2 justify-between ">
-
-                                        <h2 className="text-[0.8rem] line-clamp-1 font-semibold">
+                                    {/* Details */}
+                                    <div className="flex-1 min-w-0">
+                                        <h2 className="text-sm sm:text-base font-semibold truncate">
                                             {cart.allcarts.productname}
                                         </h2>
 
-                                        <p className="text-[0.7rem] text-gray-500 mt-1">
+                                        <p className="text-xs sm:text-sm text-gray-500">
                                             {cart.allcarts.brand} {cart.allcarts.unit}
                                         </p>
 
-                                        <div className="flex justify-between items-center gap-2 mt-1.5">
-
-                                            <p className="text-[1rem] font-bold text-green-600">
+                                        <div className="flex items-center gap-2 mt-1">
+                                            <p className="text-green-600 font-bold text-sm sm:text-lg">
                                                 ₹{cart.allcarts.discount_price}
                                             </p>
 
                                             {cart.allcarts.discount > 0 && (
-                                                <p className="text-gray-400 line-through">
+                                                <p className="text-xs sm:text-sm text-gray-400 line-through">
                                                     ₹{cart.allcarts.price}
                                                 </p>
                                             )}
-
                                         </div>
-
                                     </div>
 
-                                    {/* Quantity + Button */}
-                                    <div className=' flex gap-1 ' >
-                                        <div
-                                            className="flex justify-center items-center text-[1rem] gap-1.5">
+                                    {/* Quantity + Delete */}
+                                    <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                                        <div className="flex items-center gap-2 border rounded-md px-2 py-1">
                                             <button
                                                 onClick={() => decrease_quantity(cart.allcarts._id)}
-                                                className=' bg-[#e8e3e3] px-1 rounded cursor-pointer ' >-</button>
-                                            <span>{cart.quantity}</span>
+                                                className="bg-gray-200 px-2 rounded hover:bg-gray-300"
+                                            >
+                                                -
+                                            </button>
+
+                                            <span className="text-sm">{cart.quantity}</span>
+
                                             <button
                                                 onClick={() => increase_quantity(cart.allcarts._id)}
-                                                className=' bg-[#e8e3e3] px-1 rounded cursor-pointer '>+</button>
+                                                className="bg-gray-200 px-2 rounded hover:bg-gray-300"
+                                            >
+                                                +
+                                            </button>
                                         </div>
+
                                         <button
                                             onClick={() => remove_cart(cart.allcarts._id)}
-                                            className=' text-[#ff0101] cursor-pointer ' > <MdDelete /> </button>
+                                            className="text-red-500 text-lg hover:text-red-700"
+                                        >
+                                            <MdDelete />
+                                        </button>
                                     </div>
-
                                 </div>
                             ))
                         )}
@@ -436,7 +441,7 @@ const Cart = () => {
                 </div>
 
                 {/* Right Side */}
-                <div className="w-80 relative ">
+                <div className="sm:w-80 h-auto relative ">
                     <div className="bg-white border shadow-md rounded-xl p-5  ">
 
                         <h2 className="text-xl font-bold mb-4">
@@ -489,9 +494,9 @@ const Cart = () => {
                             Proceed to Checkout
                         </button>
                     </div>
-                    {/* ------- All Address ----- */}
+                    {/* ------------------- All Address ----- */}
                     <div
-                        className={`w-[40vw] h-[50vh] bg-white rounded-xl shadow-lg fixed top-20 left-95 z-50 p-4 overflow-y-auto transition-all duration-300
+                        className={`sm:w-[40vw] w-[90vw] sm:h-[50vh] h-[80vh] shadow bg-white rounded-xl sm:shadow-lg fixed sm:top-20 top-10 sm:left-95 left-4 z-50 sm:p-4 p-2 overflow-y-auto transition-all duration-300
                     ${isAddres
                                 ? "translate-y-5 opacity-100 visible"
                                 : "-translate-y-20 opacity-0 invisible"
@@ -503,7 +508,7 @@ const Cart = () => {
                             className="absolute top-3 right-3 text-red-500 cursor-pointer hover:text-red-700"
                         />
 
-                        <h2 className="text-xl font-semibold text-green-700 mb-3">
+                        <h2 className="sm:text-xl text-[1rem] font-semibold text-green-700 sm:mb-3">
                             Select Address
                         </h2>
 
@@ -512,7 +517,7 @@ const Cart = () => {
                                 getCurentLocation();
                                 addAddress();
                             }}
-                            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 mb-4"
+                            className="w-full bg-green-600 text-white sm:py-2 py-1 sm:rounded-lg rounded hover:bg-green-700 mb-1 sm:mb-4"
                         >
                             + Add Address
                         </button>
@@ -523,7 +528,7 @@ const Cart = () => {
                             alladdress.map((addr, index) => (
                                 <div
                                     key={index}
-                                    className="border border-gray-200 rounded-lg p-3 mb-3 hover:border-green-500"
+                                    className="border border-gray-200 rounded-lg sm:p-3 p-1 mb-3 hover:border-green-500 flex sm:flex-col flex-wrap sm:gap-0 gap-1 "
                                 >
                                     <h3 className="font-semibold">{addr.house_no}</h3>
 
@@ -541,7 +546,7 @@ const Cart = () => {
 
                                     <button
                                         onClick={() => choose_Address(addr.add_id)}
-                                        className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+                                        className="sm:w-auto w-full bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
                                     >
                                         Select
                                     </button>
@@ -588,7 +593,7 @@ const Cart = () => {
                     }
 
                     {/* =============== All Coupons ============ */}
-                    <div className={`fixed top-15 right-0 w-[20vw] h-[90vh] flex flex-col gap-2 p-2 rounded-l-2xl  bg-[#196203] transition-all duration-500 ease-linear 
+                    <div className={`fixed sm:top-15 top-10 right-12 sm:right-0 sm:w-[20vw] w-[70vw] sm:h-[90vh] h-[70vh] flex flex-col gap-2 sm:p-2 p-1 sm:rounded-l-2xl rounded bg-[#196203] transition-all duration-500 ease-linear overflow-y-auto 
                         ${isCoupon ? " visible translate-x-0 opacity-100 "
                             : " invisible translate-x-20 opacity-0 "
                         }
@@ -604,10 +609,10 @@ const Cart = () => {
                                 allCoupons.map((cpn, index) => (
                                     <div
                                         key={index}
-                                        className="w-full bg-white rounded-lg p-2"
+                                        className="w-full bg-white sm:rounded-lg rounded sm:p-2 p-1"
                                     >
-                                        <div className="flex justify-around items-center">
-                                            <p className=' font-bold text-[#1144ec] ' >{cpn.code}</p>
+                                        <div className="flex justify-around items-center border-b border-dashed ">
+                                            <p className=' font-bold text-[0.8rem] text-[#1144ec] ' >{cpn.code}</p>
 
                                             <p>
                                                 {cpn.type_discount === "percentage"
@@ -622,7 +627,7 @@ const Cart = () => {
                                             </button>
                                         </div>
 
-                                        <p className="text-sm text-gray-500 mt-2">
+                                        <p className="sm:text-sm text-[0.7rem] text-gray-500 sm:mt-2">
                                             Coupon will be applied on minimum order {cpn.minimum_value}
                                         </p>
                                     </div>
