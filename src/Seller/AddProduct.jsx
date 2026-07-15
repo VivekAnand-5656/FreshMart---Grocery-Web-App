@@ -166,33 +166,33 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="w-full min-h-screen bg-[#f5f7fa] flex justify-center p-6">
-            <div className="w-full max-w-5xl bg-white rounded-3xl shadow-lg p-8 relative ">
+        <div className="w-full min-h-screen bg-[#f5f7fa] flex justify-center sm:p-6 p-2 ">
+            <div className="w-full max-w-5xl bg-white sm:rounded-3xl rounded shadow-lg sm:p-8 p-2 relative ">
                 {/* --- Coupon Add Button ---- */}
                 <button
                     onClick={() => setIsCoupon(true)}
-                    className=" bg-[#30d208] rounded px-1.5 text-white font-semibold cursor-pointer absolute right-5 " >Add Coupon</button>
+                    className=" bg-[#30d208] rounded px-1.5 text-white font-semibold cursor-pointer absolute sm:right-5 right-1 " >Add Coupon</button>
                 {/* Heading */}
-                <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-800">
+                <div className="mb-0 sm:mb-8">
+                    <h1 className="sm:text-4xl text-[1.2rem] font-bold text-gray-800">
                         Add New Product
                     </h1>
 
-                    <p className="text-gray-500 mt-2">
+                    <p className="text-gray-500 sm:text-[1rem] text-[0.8rem] sm:mt-2">
                         Fill in the details below to add a new product to your store.
                     </p>
                 </div>
 
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col lg:flex-row gap-8"
+                    className="flex flex-col lg:flex-row sm:gap-8 gap-2 "
                 >
 
                     {/* Left Section */}
-                    <div className="flex-1 flex flex-col gap-5">
+                    <div className="flex-1 flex flex-col sm:gap-5 gap-2 ">
 
                         <div>
-                            <label className="block text-gray-700 font-medium mb-2">
+                            <label className="block text-gray-700 font-medium sm:mb-2">
                                 Product Name
                             </label>
 
@@ -202,12 +202,12 @@ const AddProduct = () => {
                                 placeholder="Fresh Basmati Rice"
                                 value={product.productname}
                                 onChange={handleChange}
-                                className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-gray-700 font-medium mb-2">
+                            <label className="block text-gray-700 font-medium sm:mb-2">
                                 Description
                             </label>
 
@@ -224,7 +224,7 @@ const AddProduct = () => {
                         <div className="flex gap-4 flex-wrap">
 
                             <div className="flex-1 min-w-[180px]">
-                                <label className="block text-gray-700 font-medium mb-2">
+                                <label className="block text-gray-700 font-medium sm:mb-2">
                                     Category
                                 </label>
 
@@ -234,12 +234,12 @@ const AddProduct = () => {
                                     placeholder="Vegetables"
                                     value={product.category}
                                     onChange={handleChange}
-                                    className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                    className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                                 />
                             </div>
 
                             <div className="flex-1 min-w-[180px]">
-                                <label className="block text-gray-700 font-medium mb-2">
+                                <label className="block text-gray-700 font-medium sm:mb-2">
                                     Brand
                                 </label>
 
@@ -249,7 +249,7 @@ const AddProduct = () => {
                                     placeholder="Fresh Farm"
                                     value={product.brand}
                                     onChange={handleChange}
-                                    className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                    className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                                 />
                             </div>
 
@@ -258,7 +258,7 @@ const AddProduct = () => {
                         <div className="flex gap-4 flex-wrap">
 
                             <div className="flex-1 min-w-[150px]">
-                                <label className="block text-gray-700 font-medium mb-2">
+                                <label className="block text-gray-700 font-medium sm:mb-2">
                                     Price
                                 </label>
 
@@ -268,12 +268,12 @@ const AddProduct = () => {
                                     placeholder="₹500"
                                     value={product.price}
                                     onChange={handleChange}
-                                    className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                    className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                                 />
                             </div>
 
                             <div className="flex-1 min-w-[150px]">
-                                <label className="block text-gray-700 font-medium mb-2">
+                                <label className="block text-gray-700 font-medium sm:mb-2">
                                     Discount %
                                 </label>
 
@@ -283,12 +283,12 @@ const AddProduct = () => {
                                     placeholder="10"
                                     value={product.discount}
                                     onChange={handleChange}
-                                    className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                    className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                                 />
                             </div>
 
                             <div className="flex-1 min-w-[150px]">
-                                <label className="block text-gray-700 font-medium mb-2">
+                                <label className="block text-gray-700 font-medium sm:mb-2">
                                     Unit
                                 </label>
 
@@ -298,7 +298,7 @@ const AddProduct = () => {
                                     placeholder="1 Kg"
                                     value={product.unit}
                                     onChange={handleChange}
-                                    className="w-full border rounded-xl p-3 outline-none focus:border-green-500"
+                                    className="w-full border rounded sm:rounded-xl sm:p-3 p-1.5 outline-none focus:border-green-500"
                                 />
                             </div>
 

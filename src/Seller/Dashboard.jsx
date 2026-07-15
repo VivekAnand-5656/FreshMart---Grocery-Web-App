@@ -214,7 +214,7 @@ const Dashboard = () => {
             </div>
 
             {/* =============Coupons ============= */}
-            <div className='scrolling bg-[#ffffff] w-[40vw] h-[70vh] mt-5 rounded-2xl p-2 overflow-scroll ' >
+            <div className='scrolling bg-[#ffffff] sm:w-[40vw] w-full sm:h-[70vh]  sm:mt-5 rounded-2xl p-2 overflow-scroll ' >
                 <h1 className=' text-[1.2rem] font-bold ' >COUPON's</h1>
                 {
                     allcoupons.length === 0 ? (

@@ -1,104 +1,104 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-    FaFirstOrder,
-    FaHome,
-} from "react-icons/fa";
+import React, { useState } from "react";
+import { FaFirstOrder, FaHome } from "react-icons/fa";
 import { MdAddBox, MdOutlineProductionQuantityLimits } from "react-icons/md";
+
 import AddProduct from "./AddProduct";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import MyProducts from "./MyProducts";
-import axios from "axios";
 
 const SellerHome = () => {
+  const [page, setPage] = useState("dashboard");
 
-    const apibase = "https://grocery-kirana-store.onrender.com";
+  const renderPage = () => {
+    switch (page) {
+      case "dashboard":
+        return <Dashboard />;
 
+      case "orders":
+        return <Orders />;
 
+      case "products":
+        return <MyProducts />;
 
-    // =========== Render Pages ===========
-    const [page, setPage] = useState("dashboard");
+      case "addproduct":
+        return <AddProduct />;
 
-    const renderPage = () => {
-        switch (page) {
-            case "dashboard":
-                return <Dashboard />;
+      default:
+        return <Dashboard />;
+    }
+  };
 
-            case "orders":
-                return <Orders />;
+  return (
+    <div className="w-full min-h-screen bg-slate-100 p-2 sm:p-3 flex flex-col lg:flex-row gap-2">
 
-            case "addproduct":
-                return <AddProduct />;
+      {/* ================= Sidebar ================= */}
 
-            case "products":
-                return <MyProducts />;
+      <div className="w-full lg:w-[18%] bg-white rounded-xl shadow-md p-2">
 
-            default:
-                return <Dashboard />;
-        }
-    };
+        <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible scrollbar-hide">
 
-    return (
-        <div className="h-screen bg-slate-100 p-2 flex justify-between items-center gap-2">
+          <button
+            onClick={() => setPage("dashboard")}
+            className={`flex-shrink-0 flex items-center justify-center lg:justify-start gap-2 px-4 py-3 rounded-lg transition ${
+              page === "dashboard"
+                ? "bg-[#bdf5ac] text-green-700 font-semibold"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            <FaHome />
+            <span className="text-sm">Home</span>
+          </button>
 
-            {/* =========== SideBar ============= */}
+          <button
+            onClick={() => setPage("orders")}
+            className={`flex-shrink-0 flex items-center justify-center lg:justify-start gap-2 px-4 py-3 rounded-lg transition ${
+              page === "orders"
+                ? "bg-[#bdf5ac] text-green-700 font-semibold"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            <FaFirstOrder />
+            <span className="text-sm">Orders</span>
+          </button>
 
-            <div className="w-[15%] h-full bg-white flex flex-col gap-2 p-2">
+          <button
+            onClick={() => setPage("products")}
+            className={`flex-shrink-0 flex items-center justify-center lg:justify-start gap-2 px-4 py-3 rounded-lg transition ${
+              page === "products"
+                ? "bg-[#bdf5ac] text-green-700 font-semibold"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            <MdOutlineProductionQuantityLimits />
+            <span className="text-sm">Products</span>
+          </button>
 
-                <button
-                    onClick={() => setPage("dashboard")}
-                    className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all ${page === "dashboard"
-                        ? "bg-[#bdf5ac] text-green-700 font-semibold"
-                        : "hover:bg-gray-100"
-                        }`}
-                >
-                    <FaHome />
-                    Home
-                </button>
-
-                <button
-                    onClick={() => setPage("orders")}
-                    className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all ${page === "orders"
-                        ? "bg-[#bdf5ac] text-green-700 font-semibold"
-                        : "hover:bg-gray-100"
-                        }`}
-                >
-                    <FaFirstOrder />
-                    Orders
-                </button>
-
-                <button
-                    onClick={() => setPage("products")}
-                    className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all ${page === "products"
-                        ? "bg-[#bdf5ac] text-green-700 font-semibold"
-                        : "hover:bg-gray-100"
-                        }`}
-                >
-                    <MdOutlineProductionQuantityLimits />
-                    Products
-                </button>
-
-                <button
-                    onClick={() => setPage("addproduct")}
-                    className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all ${page === "addproduct"
-                        ? "bg-[#bdf5ac] text-green-700 font-semibold"
-                        : "hover:bg-gray-100"
-                        }`}
-                >
-                    <MdAddBox />
-                    Add Product
-                </button>
-
-            </div>
-
-            {/* =========== Right Side Main ======== */}
-
-            <div className="w-[85%] h-full overflow-scroll">
-                {renderPage()}
-            </div>
+          <button
+            onClick={() => setPage("addproduct")}
+            className={`flex-shrink-0 flex items-center justify-center lg:justify-start gap-2 px-4 py-3 rounded-lg transition ${
+              page === "addproduct"
+                ? "bg-[#bdf5ac] text-green-700 font-semibold"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            <MdAddBox />
+            <span className="text-sm whitespace-nowrap">
+              Add Product
+            </span>
+          </button>
 
         </div>
-    );
+      </div>
+
+      {/* ================= Main Content ================= */}
+
+      <div className="flex-1 bg-white rounded-xl shadow-md p-2 overflow-y-auto">
+        {renderPage()}
+      </div>
+
+    </div>
+  );
 };
 
 export default SellerHome;

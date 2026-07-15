@@ -83,22 +83,22 @@ const Orders = () => {
 
   return (
     <>
-      <div className="w-full h-full bg-[#d6ffce] p-4">
+      <div className="w-full h-full bg-[#d6ffce] p-3 sm:p-4">
 
-        <div className=' w-full flex justify-between items-center ' >
-          <h1 className="text-2xl font-bold text-[#1b7d05] mb-4">
+        <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-2 mb-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-[#1b7d05]">
             My Orders
           </h1>
 
           {/* ----------- DropDown -------- */}
-          <div className=' flex justify-center items-center gap-2 ' >
+          <div className="flex justify-center items-center gap-2">
             <select
               value={status}
               onChange={(e) => {
                 setStatus(e.target.value)
                 filter_by_order(e.target.value)
               }}
-              className=' cursor-pointer border-none bg-[#2c9b03] outline-0 text-white font-bold rounded p-1.5 ' >
+              className="cursor-pointer border-none bg-[#2c9b03] outline-0 text-white font-bold rounded p-1.5 text-sm sm:text-base" >
               <option value="Pending">Pending</option>
               <option value="Accepted">Accepted</option>
               <option value="Packed">Packed</option>
@@ -109,12 +109,12 @@ const Orders = () => {
           </div>
         </div>
 
-        <div className="w-full h-[90%] overflow-y-scroll scrolling">
+        <div className="w-full h-[85%] sm:h-[90%] overflow-y-scroll scrolling">
 
           {
             allOrders.length === 0 ? (
               <div className="h-full flex items-center justify-center">
-                <p className="text-lg font-semibold text-gray-500">
+                <p className="text-base sm:text-lg font-semibold text-gray-500">
                   No Orders Found
                 </p>
               </div>
@@ -127,17 +127,17 @@ const Orders = () => {
 
                     <div
                       key={index}
-                      className="bg-white rounded-xl shadow p-4 "
+                      className="bg-white rounded-xl shadow p-3 sm:p-4"
                     >
 
                       {/* Order Header */}
 
-                      <div className="flex justify-between items-center mb-4 border-b pb-2">
-                        <h2 className="font-bold text-green-700">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4 border-b pb-2">
+                        <h2 className="font-bold text-green-700 text-sm sm:text-base">
                           Order #{index + 1}
                         </h2>
 
-                        <div className=' flex justify-center items-center gap-2  ' >
+                        <div className="flex justify-between sm:justify-center items-center gap-2">
                           <select
                             value={updateStatus[order._id] || order.items[0]?.status}
                             onChange={(e) => {
@@ -153,7 +153,7 @@ const Orders = () => {
                             <option value="Cancelled">Cancelled</option>
                           </select>
 
-                          <p className="font-semibold text-green-700">
+                          <p className="font-semibold text-green-700 text-sm sm:text-base">
                             ₹ {order.totalAmount}
                           </p>
                         </div>
@@ -168,7 +168,7 @@ const Orders = () => {
 
                             <div
                               key={index}
-                              className="w-52 border cursor-pointer  rounded-lg p-3 flex flex-col gap-2 bg-[#f8fff4] transition-all duration-500 hover:-translate-y-2 "
+                              className="w-full xs:w-[47%] sm:w-52 border cursor-pointer rounded-lg p-3 flex flex-col gap-2 bg-[#f8fff4] transition-all duration-500 hover:-translate-y-2"
                             >
 
                               <div className="flex justify-center">
@@ -181,7 +181,7 @@ const Orders = () => {
 
                               </div>
 
-                              <h3 className="font-semibold text-green-700 line-clamp-1">
+                              <h3 className="font-semibold text-green-700 line-clamp-1 text-sm sm:text-base">
                                 {product.productname}
                               </h3>
 

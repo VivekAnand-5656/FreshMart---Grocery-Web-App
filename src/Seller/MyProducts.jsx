@@ -34,22 +34,17 @@ const MyProducts = () => {
     <>
       <div className=' w-full h-[80vh] flex flex-col gap-2 ' >
         <h1 className=' font-semibold  ' >My Products</h1> 
-          <div className="w-full flex flex-wrap gap-5  ">
+          <div className="w-full flex flex-wrap sm:gap-5 gap-1 justify-around  ">
 
             {
               allProducts.length === 0 ?
-
                 <p className="text-lg font-semibold">
                   Product not available
                 </p>
-
-                :
-
-                allProducts.map((product, index) => (
-
+                :allProducts.map((product, index) => (
                   <div
                     key={index}
-                    className="w-52 bg-white rounded-xl flex flex-col justify-between shadow hover:shadow-lg border overflow-hidden transition"
+                    className="sm:w-52 w-35 sm:h-auto h-50 bg-white sm:rounded-xl rounded flex flex-col justify-between shadow hover:shadow-lg border overflow-hidden transition"
                   >
 
                     <div className="h-36 bg-gray-100 flex justify-center items-center">
